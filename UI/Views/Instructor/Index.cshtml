@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+<h1>Öğretmen Listesi</h1>
+<table id="InstructorList"
+       data-toggle="InstructorList"
+       data-click-to-select="true"
+       data-show-columns="true"
+       data-checkbox-header="false"
+       data-multiple-select-row="true"
+       data-toolbar="#toolbar"
+       data-pagination="true"
+       data-search="true">
+    <thead>
+        <tr>
+            <th data-field="name">Ad</th>
+            <th data-field="surname">Soyad</th>
+            <th data-field="age">Yaş</th>
+            <th data-field="birtday">Doğum Tarihi</th>
+            <th data-field="email">Mail Adresi</th>
+            <th data-field="phoneNumber">Telefon Numarası</th>
+            <th data-field="gender" data-formatter="genderFormatter">Cinsiyet</th>
+            <th data-field="cv">CV</th>
+            <th data-field="courseName">Kurs</th>
+            <th data-field="country">Ülke</th>
+            <th data-field="city">Şehir</th>
+            <th data-field="street">İlçe</th>
+            <th data-field="apartmentNumber">Apartman No</th>
+            <th data-field="houseNumber">Daire No</th>
+        </tr>
+    </thead>
+    <tbody><tr></tr></tbody>
+</table>
+
+<button id="btnCreatePage" type="button" class="btn btn-outline-primary">Öğretmen Ekle</button>
+
+<script>
+    $(document).ready(function () {
+        $('#btnCreatePage').click(function () {
+            Gonder('/Instructor/Create');
+        });
+
+        Veri_Listele(webUrl + 'api/Instructor/InstructorTable', 'InstructorList');
+       
+    });
+    function genderFormatter(value, row, index) {
+        if (value == 0) {
+           return '<p>Erkek</p>'
+        } else if(value == 1) {
+           return '<p>Bayan</p>'
+        }
+    };
+</script>
+
+
+

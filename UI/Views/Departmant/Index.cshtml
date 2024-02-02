@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Departmanlar</h1>
+
+<table id="DepartmanListesi"
+       data-toggle="DepartmanListesi"
+       data-click-to-select="true"
+       data-show-columns="true"
+       data-checkbox-header="false"
+       data-multiple-select-row="true"
+       data-toolbar="#toolbar"
+       data-pagination="true"
+       data-search="true">
+    <thead>
+        <tr>
+            <th id="chk" data-field="state" data-checkbox="true"></th>
+            <th data-field="name">Departman Adı</th>
+            <th data-field="facultyName">Fakülte</th>
+        </tr>
+    </thead>
+    <tbody><tr></tr> </tbody>
+</table>
+<button id="btnEkleModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ekleModal">
+    Kayıt
+</button>
+<button id="btnGuncelleModal" type="button" class="btn btn-info" data-toggle="modal" data-target="#guncelleModal">
+    Guncelle
+</button>
+<button id="btnSil" class="btn btn-danger">Sil</button>
+<!-- Modal Ekleme İçin-->
+<div class="modal fade" id="ekleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kayıt İşlemi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEkle">
+                    <div class="form-group">
+                        <label>Departman Adı</label>
+                        <input type="text" class="form-control" id="DepartmantAdEkle" name="name">
+
+                    </div>
+                    <div class="form-group">
+                        <label>Fakulte</label>
+                        <select type="text" class="form-control" id="FacultyEkle" name="facultyId">
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button id="btnEkle" type="button" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Güncelleme İçin -->
+<div class="modal fade" id="guncelleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Güncelleme İşlemi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmGuncelle">
+                    <div class="form-group">
+                        <label>Departman Adı</label>
+                        <input type="text" class="form-control" id="DepartmantAdGuncelle" name="name">
+
+                    </div>
+                    <div class="form-group">
+                        <label>Fakulte</label>
+                        <select type="text" class="form-control" id="FacultyGuncelle" name="facultyId">
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button id="btnGuncelle" type="button" class="btn btn-primary">Guncelle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        Veri_Listele(webUrl + 'api/Departmant/DepartmantTable', 'DepartmanListesi');
+        $('#btnEkleModal').click(function () {
+            Fakulte_Listele(webUrl + 'api/Faculty/List', 'FacultyEkle');
+        });
+        $('#btnEkle').click(function () {
+            Veri_Ekle(webUrl + 'api/Departmant/Post', 'frmEkle');
+        });
+        $('#btnSil').click(function () {
+            var data = $('#DepartmanListesi').bootstrapTable('getSelections')[0];
+            Veri_Sil(webUrl + "api/Departmant/Delete", data);
+        });
+        $('#btnGuncelleModal').click(function () {
+            var data = $('#DepartmanListesi').bootstrapTable('getSelections')[0].id;//Bootsrapt table da tıklanan satırın id sini verir.
+            Veri_Getir_DepartmanIcin(webUrl + "api/Departmant/Get", data);
+            $('#btnGuncelle').click(function () {
+                var name = $('#DepartmantAdGuncelle').val();
+                var facultyId = $('#FacultyGuncelle').val();
+                const departmant = new DepartmanTextBoxDoldur(data, name, facultyId);
+                Veri_Guncelle(webUrl + 'api/Departmant/Put', departmant);
+            });
+        });
+    });
+    function Veri_Getir_DepartmanIcin(_url, data) {
+        $.ajax({
+            url: _url,
+            method: 'GET',
+            dataType: 'json',
+            data: { id: data },
+            async: false,
+            success: function (result) {
+                $('#DepartmantAdGuncelle').val(result.name);
+                Fakulte_Listele(webUrl + 'api/Faculty/List', 'FacultyGuncelle');
+                $('#FacultyGuncelle').val(result.facultyId);
+            },
+            error: function (err) {
+                console.log(err);
+                alert('HATA');
+            }
+        });
+    };
+</script>

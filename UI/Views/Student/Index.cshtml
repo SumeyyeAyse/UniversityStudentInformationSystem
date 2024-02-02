@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+<h1>Öğrenci Listesi</h1>
+<table id="StudentList"
+       data-toggle="StudentList"
+       data-click-to-select="true"
+       data-show-columns="true"
+       data-checkbox-header="false"
+       data-multiple-select-row="true"
+       data-toolbar="#toolbar"
+       data-pagination="true"
+       data-search="true">
+    <thead>
+        <tr>
+            <th id="chk" data-field="state" data-checkbox="true"></th>
+            <th data-field="name">Ad</th>
+            <th data-field="surname">Soyad</th>
+            <th data-field="age">Yaş</th>
+            <th data-field="birtday">Doğum Tarihi</th>
+            <th data-field="email">Mail Adresi</th>
+            <th data-field="phoneNumber">Telefon Numarası</th>
+            <th data-field="yearOfEntry">Öğrenci Giriş Tarihi</th>
+            <th data-field="academicTranscript">Transkript</th>
+            <th data-field="gpa">Gpa</th>
+            <th data-field="gender" data-formatter="genderFormatter">Cinsiyet</th>
+            <th data-field="departmantName">Departman</th>
+            <th data-field="courseName">Kurs</th>
+            <th data-field="country">Ülke</th>
+            <th data-field="city">Şehir</th>
+            <th data-field="street">İlçe</th>
+            <th data-field="apartmentNumber">Apartman No</th>
+            <th data-field="houseNumber">Daire No</th>
+        </tr>
+    </thead>
+    <tbody><tr></tr></tbody>
+</table>
+
+<button id="btnCreatePage" type="button" class="btn btn-outline-primary">Öğrenci Ekle</button>
+@*<button id="btnUpdatePage" type="button" class="btn btn-outline-primary">Öğrenci Güncelle</button>*@
+@*<button id="btnSil" class="btn btn-outline-danger">Sil</button>*@
+<script>
+    $(document).ready(function () {
+        $('#btnCreatePage').click(function () {
+            Gonder('/Student/Create');
+        });
+     
+            $('#btnUpdatePage').click(function () {
+                Gonder('/Student/Update');
+            });
+        
+        Veri_Listele(webUrl + 'api/Student/StudentTable', 'StudentList');
+        $('#btnSil').click(function () {
+            var data = $('#DepartmanListesi').bootstrapTable('getSelections')[0];
+            Veri_Sil(webUrl + "api/Student/Delete", data);
+            Veri_Sil(webUrl + "api/StudentAddress/Delete", data);
+        });
+    });
+    function genderFormatter(value, row, index) {
+        if (value == 0) {
+           return '<p>Erkek</p>'
+        } else if(value == 1) {
+           return '<p>Bayan</p>'
+        }
+    };
+</script>
+

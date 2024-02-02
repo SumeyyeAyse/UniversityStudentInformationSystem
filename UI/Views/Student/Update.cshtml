@@ -1,0 +1,212 @@
+﻿
+@{
+    ViewData["Title"] = "Öğrenci Güncelleme Bölümü";
+}
+
+
+
+<h1>Öğrenci Güncelleme Bölümü</h1>
+<form id="frmStudent">
+    <div class="row">
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Adınız</label>
+                <input id="Name" name="name" type="text" class="form-control" placeholder="Adınız">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Soyadınız</label>
+                <input id="Surname" name="surname" type="text" class="form-control" placeholder="Soyadınız">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Yaşınız</label>
+                <input id="Age" name="age" type="number" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Mail</label>
+                <input id="Email" name="email" type="email" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Telefon Numaranız</label>
+                <input id="PhoneNumber" name="phoneNumber" type="number" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Üniversiteye Giriş Yılı</label>
+                <input id="YearOfEntry" name="yearOfEntry" type="datetime" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Transcript</label>
+                <input id="AcademicTranscript" name="academicTranscript" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Gpa</label>
+                <input id="Gpa" name="gpa" type="number" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Cinsiyet</label>
+                <select class="form-control" id="Gender" name="gender"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Departman</label>
+                <select class="form-control" id="DepartmantId" name="departmantId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Kurs</label>
+                <select class="form-control" id="CourseId" name="courseId"></select>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" id="btnKaydet">Kaydet</button>
+</form>
+<br />
+<br />
+<br />
+<h2>Öğrenci Adres Bilgileri</h2>
+<form id="frmStudentAddress">
+    <div class="row">
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Şehir</label>
+                <input id="City" name="city" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Cadde</label>
+                <input id="Street" name="street" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Ülke</label>
+                <input id="Country" name="country" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Apartman No</label>
+                <input id="ApartmentNumber" name="apartmentNumber" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Daire No</label>
+                <input id="HouseNumber" name="houseNumber" type="tel" class="form-control">
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-outline-primary" id="btnAdresKaydet">Adres Kaydet</button>
+    <button type="button" class="btn btn-outline-success" id="btnGeriDon">Geri Dön</button>
+</form>
+<script>
+    var data = $('#StudentList').bootstrapTable('getSelections')[0].id;
+    $(document).ready(function () {
+        Veri_Getir_StudentIcin(webUrl + "api/Student/Get", data);
+        $('#btnKaydet').click(function () {
+            var name = $('#Name').val();
+            var surname = $('#Surname').val();
+            var age = $('#Age').val();
+            var email = $('#Email').val();
+            var phoneNumber = $('#PhoneNumber').val();
+            var yearOfEntry = $('#YearOfEntry').val();
+            var academicTranscript = $('#AcademicTranscript').val();
+            var gpa = $('#Gpa').val();
+            var gender = $('#Gender').val();
+            var departmantId = $('#DepartmantId').val();
+            var courseId = $('#CourseId').val();
+            const student = new StudentTextBoxDoldur(data, name, surname, age, email, phoneNumber, yearOfEntry, academicTranscript, gpa, gender, departmantId, courseId);
+            Veri_Guncelle(webUrl + 'api/Student/Put', student);
+            $('#btnGeriDon').click(function () {
+                Gonder('/Student/Index');
+            });
+        });
+    });
+    function Veri_Getir_StudentIcin(_url, data) {
+        $.ajax({
+            url: _url,
+            method: 'GET',
+            dataType: 'json',
+            data: { id: data },
+            async: false,
+            success: function (result) {
+                $('#Name').val(result.name);
+                $('#Surname').val(result.surname);
+                $('#Age').val(result.age);
+                $('#Email').val(result.email);
+                $('#PhoneNumber').val(result.phoneNumber);
+                $('#YearOfEntry').val(result.yearOfEntry);
+                $('#AcademicTranscript').val(result.academicTranscript);
+                $('#Gpa').val(result.gpa);
+                $('#Gender').val(result.gender);
+                $('#DepartmantId').val(result.departmantId);
+                $('#CourseId').val(result.courseId);
+                Kurs_Listele(webUrl + 'api/Course/List', 'CourseId');
+            },
+            error: function (err) {
+                console.log(err);
+                alert('HATA');
+            }
+        });
+    };
+    function StudentTextBoxDoldur(id, name, surname, age, email, phoneNumber, yearOfEntry, academicTranscript, gpa, gender, departmantId, courseId) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.yearOfEntry = yearOfEntry;
+        this.academicTranscript = academicTranscript;
+        this.gpa = gpa;
+        this.gender = gender;
+        this.departmantId = departmantId;
+        this.courseId = courseId;
+    };
+    function Veri_Getir_StudentAddressIcin(_url, data) {
+        $.ajax({
+            url: _url,
+            method: 'GET',
+            dataType: 'json',
+            data: { id: data },
+            async: false,
+            success: function (result) {
+                $('#City').val(result.city);
+                $('#Street').val(result.street);
+                $('#Country').val(result.country);
+                $('#ApartmentNumber').val(result.apartmentNumber);
+                $('#HouseNumber').val(result.houseNumber);               
+            },
+            error: function (err) {
+                console.log(err);
+                alert('HATA');
+            }
+        });
+    };
+    function StudentAddressTextBoxDoldur(id, city, street, country, apartmentNumber, houseNumber) {
+        this.id = id;
+        this.city = city;
+        this.street = street;
+        this.country = country;
+        this.apartmentNumber = apartmentNumber;
+        this.houseNumber = houseNumber;
+</script>
+

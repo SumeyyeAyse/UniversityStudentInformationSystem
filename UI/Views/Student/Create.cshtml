@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewData["Title"] = "Öğrenci Ekleme Bölümü";
+}
+
+<h1>Öğrenci Ekleme Bölümü</h1>
+
+
+<form id="frmStudent">
+    <div class="row">
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Adınız</label>
+                <input id="Name" name="name" type="text" class="form-control" maxlength="50">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Soyadınız</label>
+                <input id="Surname" name="surname" type="text" class="form-control" maxlength="50">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Yaşınız</label>
+                <input id="Age" name="age" type="number" class="form-control" min="0" max="100">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Doğum Tarihi</label>
+                <input id="Birtday" name="birtday" type="date" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Mail</label>
+                <input id="Email" name="email" type="email" class="form-control" maxlength="150">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Telefon Numaranız</label>
+                <input id="PhoneNumber" name="phoneNumber" type="number" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Üniversiteye Giriş Yılı</label>
+                <input id="YearOfEntry" name="yearOfEntry" type="date" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Transcript</label>
+                <input id="AcademicTranscript" name="academicTranscript" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Gpa</label>
+                <input id="Gpa" name="gpa" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Cinsiyet</label>
+                <select class="form-control" id="Gender">
+                    <option name="gender" value="0">Erkek</option>
+                    <option name="gender" value="1">Bayan</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Departman</label>
+                <select class="form-control" id="DepartmantId" name="departmantId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <label class="font-weight-bold">Kurs</label>
+                <select class="form-control" id="CourseId" name="courseId"></select>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" id="btnKaydet">Kaydet</button>
+</form>
+<br />
+<br />
+<br />
+<h2>Öğrenci Adres Bilgileri</h2>
+    <form id="frmStudentAddress">
+        <div class="row">
+            <div class="form-group">
+                <div class="col">
+                    <label class="font-weight-bold">Ülke</label>
+                    <input id="Country" name="country" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col">
+                    <label class="font-weight-bold">Şehir</label>
+                    <input id="City" name="city" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col">
+                    <label class="font-weight-bold">Cadde</label>
+                    <input id="Street" name="street" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col">
+                    <label class="font-weight-bold">Apartman No</label>
+                    <input id="ApartmentNumber" name="apartmentNumber" type="number" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col">
+                    <label class="font-weight-bold">Daire No</label>
+                    <input id="HouseNumber" name="houseNumber" type="number" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col">
+                    <label class="font-weight-bold">Öğrenci</label>
+                    <select class="form-control" id="StudentId" name="studentId"></select>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary" id="btnAdresKaydet">Adres Kaydet</button>
+        <button type="button" class="btn btn-outline-success" id="btnGeriDon">Geri Dön</button>
+    </form>
+
+<script>
+    $(document).ready(function () {
+        Departman_Listele(webUrl + 'api/Departmant/List', 'DepartmantId');
+        Kurs_Listele(webUrl + 'api/Course/List', 'CourseId');
+        Student_Listele(webUrl + 'api/Student/List', 'StudentId');
+        $('#btnKaydet').click(function () {
+            Veri_Ekle(webUrl + 'api/Student/Post', 'frmStudent');
+        });
+        $('#btnGeriDon').click(function () {
+            Gonder('/Student/Index');
+        });
+        $('#btnAdresKaydet').click(function () {
+            Veri_Ekle(webUrl + 'api/StudentAddress/Post', 'frmStudentAddress');
+        })
+    });
+</script>
+
+
+
+
+
+
+

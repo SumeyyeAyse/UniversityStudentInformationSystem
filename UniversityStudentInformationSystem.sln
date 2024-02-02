@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32510.428
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{499CC54B-16B1-4CEA-AC94-28183AA1ABA0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI\UI.csproj", "{E4D4763B-302B-4231-9D4D-ED441F4CA5D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLCodes", "SQLCodes", "{6365F275-F144-4E47-BB81-DAEE4390EABD}"
+	ProjectSection(SolutionItems) = preProject
+		SQLCodes\V_DepartmantTable.sql = SQLCodes\V_DepartmantTable.sql
+		SQLCodes\V_InstructorTable.sql = SQLCodes\V_InstructorTable.sql
+		SQLCodes\V_StudentTable.sql = SQLCodes\V_StudentTable.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{499CC54B-16B1-4CEA-AC94-28183AA1ABA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499CC54B-16B1-4CEA-AC94-28183AA1ABA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499CC54B-16B1-4CEA-AC94-28183AA1ABA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499CC54B-16B1-4CEA-AC94-28183AA1ABA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4D4763B-302B-4231-9D4D-ED441F4CA5D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4D4763B-302B-4231-9D4D-ED441F4CA5D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4D4763B-302B-4231-9D4D-ED441F4CA5D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4D4763B-302B-4231-9D4D-ED441F4CA5D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B564FF81-C32C-477A-850F-6E42D24A19B3}
+	EndGlobalSection
+EndGlobal
